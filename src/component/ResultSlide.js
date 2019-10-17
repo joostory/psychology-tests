@@ -1,17 +1,21 @@
 import React from 'react'
 import Slide from './Slide'
+import { Typography } from '@material-ui/core'
 
 export default function ResultSlide({scores, messages}) {
 
-  const score = scores.length > 0? scores.reduce((a,b) => a + b) : 0
+  const score = scores.length > 0? scores.reduce((a,b) => parseInt(a) + parseInt(b)) : 0
   const message = messages.find(item =>
     score <= item.score
   )
 
   return (
     <Slide>
-      <h3>총 {score}점</h3>
-      <p>{message.message}</p>
+      <Typography variant="h2" gutterBottom={true}>
+        총 {score}점
+      </Typography>
+      
+      {message && <p>{message.message}</p>}
     </Slide>
   )
 }

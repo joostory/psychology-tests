@@ -1,13 +1,21 @@
 import React from 'react'
+import { Fab, Typography } from '@material-ui/core'
 import Slide from './Slide'
 
 export default function TitleSlide({title, description, disabled, onStart}) {
   return (
     <Slide>
-      <h3>{title}</h3>
-      <p>{description}</p>
+      <Typography variant="h3" gutterBottom={true}>
+        {title}
+      </Typography>
+      <Typography variant="body1" component="p" paragraph={true}>
+        {description}
+      </Typography>
+
       {!disabled &&
-        <button onClick={onStart}>시작하기</button>
+        <Fab variant="extended" color="primary" onClick={onStart}>
+          시작하기
+        </Fab>
       }
     </Slide>
   )
