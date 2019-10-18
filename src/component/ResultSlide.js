@@ -15,7 +15,11 @@ export default function ResultSlide({scores, messages}) {
         총 {score}점
       </Typography>
       
-      {message && <p>{message.message}</p>}
+      {message &&
+        <Typography variant="body1">
+          {message.message}
+        </Typography>
+      }
     </Slide>
   )
 }

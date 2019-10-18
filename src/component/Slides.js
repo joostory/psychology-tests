@@ -12,9 +12,11 @@ export default function Slides({data}) {
   const [index, setIndex] = useState(0)
 
 
-  function handleAdd(score) {
+  function handleAddAnswer(score) {
     setScores([...scores, score])
-    setIndex(index + 1)
+    setTimeout(() => {
+      setIndex(index + 1)
+    }, 500)
   }
 
   function handleCancel() {
@@ -33,7 +35,6 @@ export default function Slides({data}) {
       effect: "fade",
       allowTouchMove: false
     }))
-
   }, [])
 
   return (
@@ -49,8 +50,10 @@ export default function Slides({data}) {
           <QuestionSlide
             key={index}
             question={item}
+            currentIndex={index + 1}
+            totalCount={data.questions.length}
             type={data.answerType}
-            onAdd={handleAdd}
+            onAnswer={handleAddAnswer}
             onCancel={handleCancel}
           />
         )}
