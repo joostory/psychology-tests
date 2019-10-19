@@ -18,6 +18,19 @@ function Choice5({onSelect}) {
   )
 }
 
+function Choice4({onSelect}) {
+  return (
+    <FormControl component="fieldset">
+      <RadioGroup onChange={e => onSelect(e.target.value)}>
+        <FormControlLabel value="0" control={<Radio />} label="전혀 그렇지 않다." />
+        <FormControlLabel value="1" control={<Radio />} label="대체로 그렇지 않다." />
+        <FormControlLabel value="2" control={<Radio />} label="대체로 그렇다." />
+        <FormControlLabel value="3" control={<Radio />} label="전적으로 그렇다." />
+      </RadioGroup>
+    </FormControl>
+  )
+}
+
 function Choice2({onSelect}) {
   return (
     <FormControl component="fieldset">
@@ -29,12 +42,15 @@ function Choice2({onSelect}) {
   )
 }
 
-function Answer({type, onAdd}) {
-  if (type == "choice2") {
-    return <Choice2 onSelect={onAdd} />
-  } else {
-    // default choice5
-    return <Choice5 onSelect={onAdd} />
+function Answer({type, onSelect}) {
+  switch(type) {
+    case "choice2":
+      return <Choice2 onSelect={onSelect} />
+    case "choice4":
+      return <Choice4 onSelect={onSelect} />
+    case "choice5":
+    default:
+      return <Choice5 onSelect={onSelect} />
   }
 }
 
