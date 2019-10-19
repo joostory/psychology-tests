@@ -4,10 +4,10 @@ import {
   Typography, FormControl, FormControlLabel, RadioGroup, Radio, Button, Paper, makeStyles
 } from '@material-ui/core'
 
-function Choice5({onSelect}) {
+function Choice5({score, onSelect}) {
   return (
     <FormControl component="fieldset">
-      <RadioGroup onChange={e => onSelect(e.target.value)}>
+      <RadioGroup value={score} onChange={e => onSelect(e.target.value)}>
         <FormControlLabel value="0" control={<Radio />} label="전혀 그렇지 않다." />
         <FormControlLabel value="1" control={<Radio />} label="대체로 그렇지 않다." />
         <FormControlLabel value="2" control={<Radio />} label="중간이다." />
@@ -18,10 +18,10 @@ function Choice5({onSelect}) {
   )
 }
 
-function Choice4({onSelect}) {
+function Choice4({score, onSelect}) {
   return (
     <FormControl component="fieldset">
-      <RadioGroup onChange={e => onSelect(e.target.value)}>
+      <RadioGroup value={score} onChange={e => onSelect(e.target.value)}>
         <FormControlLabel value="0" control={<Radio />} label="전혀 그렇지 않다." />
         <FormControlLabel value="1" control={<Radio />} label="대체로 그렇지 않다." />
         <FormControlLabel value="2" control={<Radio />} label="대체로 그렇다." />
@@ -31,10 +31,23 @@ function Choice4({onSelect}) {
   )
 }
 
-function Choice2({onSelect}) {
+function ReverseChoice4({score, onSelect}) {
   return (
     <FormControl component="fieldset">
-      <RadioGroup onChange={e => onSelect(e.target.value)}>
+      <RadioGroup value={score} onChange={e => onSelect(e.target.value)}>
+        <FormControlLabel value="3" control={<Radio />} label="전혀 그렇지 않다." />
+        <FormControlLabel value="2" control={<Radio />} label="대체로 그렇지 않다." />
+        <FormControlLabel value="1" control={<Radio />} label="대체로 그렇다." />
+        <FormControlLabel value="0" control={<Radio />} label="전적으로 그렇다." />
+      </RadioGroup>
+    </FormControl>
+  )
+}
+
+function Choice2({score, onSelect}) {
+  return (
+    <FormControl component="fieldset">
+      <RadioGroup value={score} onChange={e => onSelect(e.target.value)}>
         <FormControlLabel value="1" control={<Radio />} label="예" />
         <FormControlLabel value="0" control={<Radio />} label="아니오" />
       </RadioGroup>
@@ -42,15 +55,19 @@ function Choice2({onSelect}) {
   )
 }
 
-function Answer({type, onSelect}) {
+function Answer({type, score, reverse, onSelect}) {
   switch(type) {
     case "choice2":
-      return <Choice2 onSelect={onSelect} />
+      return <Choice2 score={score} onSelect={onSelect} />
     case "choice4":
-      return <Choice4 onSelect={onSelect} />
+      if (reverse) {
+        return <ReverseChoice4 score={score} onSelect={onSelect} />
+      } else {
+        return <Choice4 score={score} onSelect={onSelect} />
+      }
     case "choice5":
     default:
-      return <Choice5 onSelect={onSelect} />
+      return <Choice5 score={score} onSelect={onSelect} />
   }
 }
 
@@ -64,7 +81,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function QuestionSlide({
-  question, type, onAnswer, onCancel,
+  question, score, type, onAnswer, onCancel,
   currentIndex, totalCount
 }) {
 
@@ -76,13 +93,15 @@ export default function QuestionSlide({
         {currentIndex} / {totalCount}
       </Typography>
       <Paper className={classes.paper} elevation={2}>
-        <Typography variant="h4" gutterBottom={true}>
-          {question}
+        <Typography variant="h5" gutterBottom={true}>
+          {question.title}
         </Typography>
 
         <Answer
           type={type}
-          onAdd={onAnswer}
+          score={score}
+          reverse={question.reverse}
+          onSelect={onAnswer}
         />
       </Paper>
 

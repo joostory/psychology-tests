@@ -1,5 +1,5 @@
 import React from 'react'
-import Slides from '../component/Slides'
+import Test from '../component/Test'
 
 export default function App() {
 
@@ -8,10 +8,9 @@ export default function App() {
     description: "심리검사를 준비 중입니다",
     questions: [],
     answerType: 'choice5',
-    results: []
   }
 
   return (
-    <Slides data={data} />
+    <Test data={data} />
   )
 }
